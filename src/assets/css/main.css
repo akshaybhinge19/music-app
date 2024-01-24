@@ -1,0 +1,93 @@
+a {
+  transition: all 0.15s ease;
+}
+
+/* text-yellow-500 */
+a:hover {
+  color: #f59e0b;
+  text-decoration: none;
+}
+
+.text-orange {
+  color: #f59e0b !important;
+  fill: #f59e0b !important;
+}
+
+.card-header .fa.text-orange,
+.card .card-header .fas.text-orange {
+  color: #ff5e3a;
+  fill: #ff5e3a;
+}
+
+.introduction-bg {
+  animation: slide 50s linear infinite;
+  will-change: background-position;
+  z-index: -1;
+}
+
+#playlist li:first-child {
+  padding-top: 25px;
+}
+
+.upload-dropbox.upload-dropbox-drag {
+  color: #fff;
+  background-color: #20d862;
+  border-color: #20d862;
+  border-style: solid;
+}
+
+input[type='file'] {
+  margin-top: 20px;
+}
+
+.progress-bar {
+  background-size: 1rem 1rem;
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  animation: progress-bar-stripes 1s linear infinite;
+}
+.music-instrument {
+  animation: bounce 2s infinite;
+  /* animation: slide 50s linear infinite; */
+}
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-8%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+.music-bg {
+  animation: slide 50s linear infinite;
+  will-change: background-position;
+}
+
+@keyframes progress-bar-stripes {
+  0% {
+    background-position: 1rem 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+@keyframes slide {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -4000px 0;
+  }
+}
