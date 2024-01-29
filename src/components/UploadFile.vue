@@ -94,19 +94,19 @@ export default {
             const songRef = await songsCollection.add(song)
             const songSnapshot = await songRef.get()
             // this.addSong(song);
-            this.$emit('addSong', songSnapshot);
+            this.$emit('addSong', songSnapshot)
             this.uploads[uploadIndex].variant = 'bg-green-400'
             this.uploads[uploadIndex].icon = 'fas fa-check'
             this.uploads[uploadIndex].text_class = 'text-green-400'
           }
         )
       })
-    },
+    }
   },
   beforeUnmount() {
-    this.uploads.forEach((upload)=>{
-      upload.task.cancel();
+    this.uploads.forEach((upload) => {
+      upload.task.cancel()
     })
-  },
+  }
 }
 </script>

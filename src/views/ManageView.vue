@@ -3,7 +3,7 @@
   <section class="container mx-auto mt-6">
     <div class="md:grid md:grid-cols-3 md:gap-4">
       <div class="col-span-1">
-        <upload-file @addSong="addSong"/>
+        <upload-file @addSong="addSong" />
       </div>
       <div class="col-span-2">
         <div class="bg-white rounded border border-gray-200 relative flex flex-col">
@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       songs: [],
-      unsavedChanges: false,
+      unsavedChanges: false
     }
   },
   async created() {
@@ -57,7 +57,7 @@ export default {
         ...document.data(),
         docId: document.id
       }
-      this.songs.push(song);
+      this.songs.push(song)
     },
     updateSong(i, values) {
       // this.songs[i] = {...values}
@@ -68,15 +68,15 @@ export default {
       this.songs.splice(i, 1)
     },
     updateUnsavedChanges(value) {
-      this.unsavedChanges = value;
+      this.unsavedChanges = value
     }
   },
-  beforeRouteLeave (to, from, next) {
-    if(!this.unsavedChanges) {
-      next();
+  beforeRouteLeave(to, from, next) {
+    if (!this.unsavedChanges) {
+      next()
     } else {
       const leave = confirm('You have unsaved changes. Are you sure you want to leave?')
-      next(leave);
+      next(leave)
     }
   }
   // beforeRouteEnter(to, from, next) {

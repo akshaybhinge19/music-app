@@ -2,8 +2,10 @@
   <div class="border border-gray-200 p-3 mb-4 rounded">
     <div v-show="!showForm">
       <h4 class="inline-block text-2xl font-bold">{{ song.modified_name }}</h4>
-      <button class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right"
-        @click.prevent="deleteSong">
+      <button
+        class="ml-1 py-1 px-2 text-sm rounded text-white bg-red-600 float-right"
+        @click.prevent="deleteSong"
+      >
         <i class="fa fa-times"></i>
       </button>
       <button
@@ -88,19 +90,19 @@ export default {
     },
     updateSong: {
       type: Function,
-      required: true,
+      required: true
     },
     removeSong: {
       type: Function,
-      required: true,
+      required: true
     },
     updateUnsavedChanges: {
-      type: Function,
+      type: Function
     },
     index: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
   methods: {
     async editSong(values) {
@@ -109,32 +111,32 @@ export default {
       this.alert_message = 'PLease wait! Updating song info'
       this.alert_variant = 'bg-blue-500'
       try {
-        await songsCollection.doc(this.song.docId).update(values);
+        await songsCollection.doc(this.song.docId).update(values)
       } catch (error) {
         console.log('error', error)
         this.in_submission = false
         this.alert_message = 'Something went wrong! Try again later'
         this.alert_variant = 'bg-red-500'
-        return;
+        return
       }
-      this.updateSong(this.index, values);
+      this.updateSong(this.index, values)
       this.updateUnsavedChanges(false)
       this.in_submission = false
       this.alert_variant = 'bg-green-500'
       this.alert_message = 'Success!'
-    //   window.location.reload()
+      //   window.location.reload()
     },
     async deleteSong() {
-        try {
-            const storageRef = storage.ref();
-            const songRef = storageRef.child(`songs/${this.song.original_name}`);
-            await songRef.delete();
-            await songsCollection.doc(this.song.docId).delete();            
-        } catch (error) {
-            console.log("Something went wrong! Try again later");
-            return;
-        }
-        this.removeSong(this.index)
+      try {
+        const storageRef = storage.ref()
+        const songRef = storageRef.child(`songs/${this.song.original_name}`)
+        await songRef.delete()
+        await songsCollection.doc(this.song.docId).delete()
+      } catch (error) {
+        console.log('Something went wrong! Try again later')
+        return
+      }
+      this.removeSong(this.index)
     }
   }
 }
