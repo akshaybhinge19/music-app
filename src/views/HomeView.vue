@@ -29,20 +29,7 @@
       </div>
       <!-- Playlist -->
       <ol id="playlist">
-        <li class="flex justify-between items-center p-3 pl-6 cursor-pointer transition duration-300 hover:bg-gray-50"
-          v-for="song in songs" :key="song.docId">
-          <div>
-            <a href="#" class="font-bold block text-gray-600">{{ song.modified_name }}</a>
-            <span class="text-gray-500 text-sm">{{ song.display_name }}</span>
-          </div>
-
-          <div class="text-gray-600 text-lg">
-            <span class="comments">
-              <i class="fa fa-comments text-gray-600"></i>
-              15
-            </span>
-          </div>
-        </li>
+        <song-item v-for="song in songs" :key="song.docId" :song="song"/>
       </ol>
       <!-- .. end Playlist -->
     </div>
@@ -50,25 +37,30 @@
 </template>
 <script>
 import { songsCollection } from '@/includes/firebase';
+import SongItem from '@/components/SongItem.vue';
 export default {
   name:'HomeView',
+  components: {
+    SongItem
+  },
   data() {
     return {
       songs: [],
     }
   },
   async created() {
-    const snapshot = await songsCollection.get();
-    snapshot.forEach(this.addSong)
-    console.log('home view', this.songs)
+    this.getSongs();
   },
   methods: {
-    addSong(document) {
-      const song = {
-        ...document.data(),
-        docId: document.id
-      }
-      this.songs.push(song);
+    async getSongs() {
+      const snapshots = await songsCollection.get();
+      snapshots.forEach((document)=> {
+        this.songs.push({
+          ...document.data(),
+          docId: document.id
+        })
+      })
+      console.log('home view', this.songs)
     },
   }
 }
