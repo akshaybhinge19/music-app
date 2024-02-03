@@ -46,21 +46,57 @@ export default {
   data() {
     return {
       songs: [],
+      maxPerPage: 25,
+      pendingRequest: false,
     }
   },
   async created() {
     this.getSongs();
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
+    handleScroll() {
+      const { scrollTop, offsetHeight } = document.documentElement;
+      const { innerHeight } = window;
+      // to get if user is at bottom of the page
+      const bottomOfWindow = Math.round(scrollTop) + innerHeight === offsetHeight;
+      if (bottomOfWindow) {
+        this.getSongs();
+      }
+    },
     async getSongs() {
-      const snapshots = await songsCollection.get();
+      // return if pending request
+      if(this.pendingRequest) {
+        return;
+      }
+      this.pendingRequest = true;
+      let snapshots;
+      // conditions to fetch data at initial visit
+      if (this.songs.length) {
+        const lastDoc = await songsCollection
+          .doc(this.songs[this.songs.length - 1].docId)
+          .get();
+        snapshots = await songsCollection
+          .orderBy('modified_name')
+          .startAfter(lastDoc)
+          .limit(this.maxPerPage)
+          .get();
+      } else {
+        snapshots = await songsCollection
+          .orderBy('modified_name')
+          .limit(this.maxPerPage)
+          .get();
+      }
       snapshots.forEach((document)=> {
         this.songs.push({
           ...document.data(),
           docId: document.id
         })
       })
-      console.log('home view', this.songs)
+      this.pendingRequest = false;
     },
   }
 }
