@@ -1,4 +1,5 @@
 <template>
+  <main>
   <!-- Music Header -->
   <section class="w-full mb-8 py-14 text-center text-white relative">
     <div
@@ -8,10 +9,11 @@
     <div class="container mx-auto flex items-center">
       <!-- Play/Pause Button -->
       <button
+        @click.prevent="newSong(song)"
         type="button"
         class="z-50 h-24 w-24 text-3xl bg-white text-black rounded-full focus:outline-none"
       >
-        <i class="fas fa-play"></i>
+        <i class="fas" :class="{'fa-play': !playing, 'fa-pause': playing}"></i>
       </button>
       <div class="z-50 text-left ml-8">
         <!-- Song Info -->
@@ -21,7 +23,7 @@
     </div>
   </section>
   <!-- Form -->
-  <section class="container mx-auto mt-6">
+  <section class="container mx-auto mt-6" id="comments">
     <div class="bg-white rounded border border-gray-200 relative flex flex-col">
       <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200">
         <!-- Comment Count -->
@@ -81,12 +83,15 @@
       </p>
     </li>
   </ul>
+  </main>
 </template>
 
 <script>
 import { songsCollection, auth, commentsCollection } from '@/includes/firebase'
-import { mapState } from 'pinia'
+import { mapState, mapActions } from 'pinia'
 import useUserStore from '@/stores/user'
+import usePlayerStore from '@/stores/player'
+
 export default {
   name: 'Song',
   data() {
@@ -105,6 +110,7 @@ export default {
   },
   computed: {
     ...mapState(useUserStore, ['userLoggedIn']),
+    ...mapState(usePlayerStore, ['playing']),
     sortedComments() {
       return this.comments.slice().sort((a, b) => {
         if (this.sort === '1') {
@@ -129,6 +135,7 @@ export default {
     this.getComments()
   },
   methods: {
+    ...mapActions(usePlayerStore, ["newSong"]),
     async addComment(values, { resetForm }) {
       this.comment_in_submission = true;
       this.comment_show_alert = true;
