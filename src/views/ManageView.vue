@@ -1,6 +1,10 @@
 <template>
+  <main>
   <!-- Main Content -->
   <section class="container mx-auto mt-6">
+    <div class="absolute inset-0 w-full h-full bg-contain introduction-bg"
+      style="background-image: url(assets/img/user-header.png)">
+    </div>
     <div class="md:grid md:grid-cols-3 md:gap-4">
       <div class="col-span-1">
         <upload-file @addSong="addSong" />
@@ -11,7 +15,7 @@
             <span class="card-title">My Songs</span>
             <i class="fa fa-compact-disc float-right text-green-400 text-2xl"></i>
           </div>
-          <div class="p-6">
+          <div class="px-6 pt-6">
             <!-- Composition Items -->
             <CompositionItem
               v-for="(song, index) in songs"
@@ -23,10 +27,14 @@
               :index="index"
             />
           </div>
+          <div class="italic px-6 pb-6 opacity-80" v-if="!songs.length"> 
+            <p>Your music library is empty. Please upload songs to get started!</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
+</main>
 </template>
 
 <script>
@@ -49,7 +57,6 @@ export default {
   async created() {
     const snapshot = await songsCollection.where('uid', '==', auth.currentUser.uid).get()
     snapshot.forEach(this.addSong)
-    console.log('songs', { ...this.songs })
   },
   methods: {
     addSong(document) {

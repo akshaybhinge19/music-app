@@ -8,6 +8,7 @@
       <component :is="Component"> </component>
     </transition>
   </router-view>
+  <!-- <router-view></router-view> -->
 
   <!-- Player -->
   <app-player/>

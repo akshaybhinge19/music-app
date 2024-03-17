@@ -54,7 +54,6 @@ export default {
     async handleLogout() {
       try {
         await this.userStore.signOut()
-        console.log('signout', this.$route)
         if (this.$route.meta.requiresAuth) {
           this.$router.push({ name: 'home' })
         }

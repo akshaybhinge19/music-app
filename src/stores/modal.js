@@ -8,5 +8,10 @@ export default defineStore('modal', {
     hiddenClass(state) {
       return !state.isOpen ? 'hidden' : ''
     }
+  },
+  actions: {
+    toggleAuthModal() {
+      this.isOpen = !this.isOpen;
+    }
   }
 })

@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed bottom-0 left-0 bg-white px-4 py-2 w-full">
+  <div class="fixed bottom-2 left-0 bg-white px-4 py-2 w-full">
     <!-- Track Info -->
     <div class="text-center" v-if="current_song.modified_name">
       <span class="song-title font-bold"> {{ current_song.modified_name }}</span> by

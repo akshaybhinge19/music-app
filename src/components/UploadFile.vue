@@ -1,8 +1,9 @@
 <template>
   <div class="bg-white rounded border border-gray-200 relative flex flex-col">
-    <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200">
+    <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200"
+      v-icon-secondary="{ icon: 'upload', right: true, green: true }">
       <span class="card-title">Upload</span>
-      <i class="fas fa-upload float-right text-green-400 text-2xl"></i>
+      <!-- <i class="fas fa-upload float-right text-green-400 text-2xl"></i> -->
     </div>
     <div class="p-6">
       <!-- Upload Dropbox -->
@@ -41,8 +42,13 @@
 </template>
 <script>
 import { storage, auth, songsCollection } from '@/includes/firebase'
+import IconSecondary from '@/directives/icon-secondary'
+
 export default {
   name: 'UploadFile',
+  directives: {
+    'icon-secondary': IconSecondary
+  },
   data() {
     return {
       is_dragover: false,
@@ -51,7 +57,6 @@ export default {
   },
   methods: {
     upload($event) {
-      console.log('event', $event)
       const files = $event.dataTransfer ? [...$event.dataTransfer.files] : [...$event.target.files]
       this.is_dragover = false
       files.forEach((file) => {
