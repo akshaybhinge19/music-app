@@ -10,7 +10,10 @@
       <span class="text-gray-500 text-sm">{{ song.display_name }}</span>
     </div>
 
-    <div class="text-gray-600 text-lg">
+    <div class="flex text-gray-600 text-lg">
+      <button type="button" @click.prevent="currentPlaying ? toggleAudio() : newSong(song)">
+        <i class="fas text-gray-500 text-xl pr-4 pl-1" :class="{ 'fa-play': !currentPlaying, 'fa-pause': currentPlaying}"></i>
+      </button>
       <router-link custom :to="{ name: 'song', params: { id: song.docId }, hash: '#comments' }"
         v-slot="{ navigate }">
         <span class="comments" @click="navigate">
@@ -23,8 +26,20 @@
 </template>
 
 <script>
+import usePlayerStore from '@/stores/player'
+import { mapState, mapActions } from 'pinia';
+
 export default {
   name: 'SongItem',
   props: ['song'],
+  computed: {
+    ...mapState(usePlayerStore,['playing','current_song']),
+    currentPlaying() {
+      return this.playing && this.current_song.docId === this.song.docId;
+    }
+  },
+  methods: {
+    ...mapActions(usePlayerStore,['newSong','toggleAudio'])
+  },
 }
 </script>
