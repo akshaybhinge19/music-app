@@ -2,6 +2,10 @@
 
 Music App
 
+
+![chrome-capture-2024-3-18](https://github.com/akshaybhinge19/music-app/assets/87247305/c8f35141-5fe2-47eb-a4b3-eaa10099e125)
+
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
@@ -57,3 +61,4 @@ npm run test:e2e
 ```sh
 npm run lint
 ```
+
