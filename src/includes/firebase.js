@@ -13,13 +13,13 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID
 }
 
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-const storage = firebase.storage();
+firebase.initializeApp(firebaseConfig)
+const auth = firebase.auth()
+const db = firebase.firestore()
+const storage = firebase.storage()
 
-const usersCollection = db.collection('users');
-const songsCollection = db.collection('songs');
-const commentsCollection = db.collection('comments');
+const usersCollection = db.collection('users')
+const songsCollection = db.collection('songs')
+const commentsCollection = db.collection('comments')
 
 export { auth, db, usersCollection, songsCollection, commentsCollection, storage }
